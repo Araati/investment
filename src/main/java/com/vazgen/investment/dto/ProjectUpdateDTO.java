@@ -11,6 +11,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ProjectUpdateDTO {
 
+    // TODO: 10.06.2022 Все String могут быть пустыми
     @JsonProperty(value = "type")
     private String type;
 

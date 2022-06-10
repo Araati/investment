@@ -10,6 +10,8 @@ public interface Project {
 
     String getType();
 
+    // TODO: 10.06.2022 getStatus
+
     long getRequiredMoney();
 
     long getCollectedMoney();
