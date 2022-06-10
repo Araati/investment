@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @NoArgsConstructor
@@ -34,7 +35,7 @@ public class ProjectUpdateDTO {
     private String preview;
 
     @JsonProperty(value = "tagList")
-    private ArrayList<String> tagList;
+    private List<Long> tagList;
 
     public Optional<String> getType()   {
         return Optional.ofNullable(type);
@@ -71,8 +72,7 @@ public class ProjectUpdateDTO {
         return Optional.ofNullable(preview);
     }
 
-    // TODO: 06.06.2022 У меня большие сомнения в работоспособности этой шняги
-    public Optional<ArrayList<String>> getTagList()   {
+    public Optional<List<Long>> getTagList()   {
         return Optional.ofNullable(tagList);
     }
 

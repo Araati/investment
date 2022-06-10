@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Getter
@@ -23,7 +23,7 @@ public class ProjectDTO implements Project {
     private String title;
     private String article;
     private String preview;
-    private ArrayList<String> tagList;
+    private List<Long> tagList;
     private LocalDateTime createdAt;
     private Optional<LocalDateTime> updatedAt;
 
@@ -36,7 +36,7 @@ public class ProjectDTO implements Project {
         this.title = request.getTitle();
         this.article = request.getArticle();
         this.preview = request.getPreview();
-        // TODO: 06.06.2022 TagList
+        this.tagList = request.getTagList();
         this.createdAt = request.getCreatedAt();
         this.updatedAt = Optional.ofNullable(request.getUpdatedAt());
     }

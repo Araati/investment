@@ -36,6 +36,7 @@ public class ProjectService {
                 .withTitle(request.getTitle().orElse(entity.getTitle()))
                 .withArticle(request.getArticle().orElse(entity.getArticle()))
                 .withPreview(request.getPreview().orElse(entity.getPreview()))
+                .withTagList(request.getTagList().orElse(entity.getTagList()))
                 .withUpdatedAt(LocalDateTime.now());
         // TODO: 06.06.2022 КОСТЫЛЬ НА updated_at
         // TODO: 06.06.2022 TAG LIST
@@ -48,7 +49,6 @@ public class ProjectService {
         projectRepository.delete(entity);
     }
 
-    // TODO: 06.06.2022 Тэги сохраняются отдельно с Id проекта и вытаскиваются во время поиска проекта 
     
     public Project findById(final long id) {
         return new ProjectDTO(projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project", id)));

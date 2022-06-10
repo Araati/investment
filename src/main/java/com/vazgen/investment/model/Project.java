@@ -1,7 +1,7 @@
 package com.vazgen.investment.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface Project {
@@ -22,8 +22,7 @@ public interface Project {
 
     String getPreview();
 
-    // TODO: 06.06.2022 TAG OBJECT 
-    ArrayList<String> getTagList();
+    List<Long> getTagList();
 
     LocalDateTime getCreatedAt();
 

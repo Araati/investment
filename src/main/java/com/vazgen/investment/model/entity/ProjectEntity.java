@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -45,6 +46,10 @@ public class ProjectEntity {
     @Column(name = "preview")
     private String preview;
 
+    @ElementCollection
+    @Column(name = "tags")
+    private List<Long> tagList;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -60,5 +65,6 @@ public class ProjectEntity {
         this.title = request.getTitle();
         this.article = request.getArticle();
         this.preview = request.getPreview();
+        this.tagList = request.getTagList();
     }
 }

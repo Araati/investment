@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -40,11 +40,11 @@ public class ProjectCreateDTO {
     private String preview;
 
     @JsonProperty(value = "tagList", required = true)
-    private ArrayList<String> tagList;
+    private List<Long> tagList;
 
 
     @JsonCreator
-    public ProjectCreateDTO(final String type, final int status, final long requiredMoney, final String title, final String article, final String preview, final ArrayList<String> tagList) {
+    public ProjectCreateDTO(final String type, final int status, final long requiredMoney, final String title, final String article, final String preview, final List<Long> tagList) {
         this.type = type;
         this.status = status;
         this.requiredMoney = requiredMoney;
