@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,8 +47,8 @@ public class TagService {
     }
 
     public List<Tag> findAll()  {
-        List<Tag> tags;
-        tags = tagRepository.findAll().stream().map(TagDTO::new).collect(Collectors.toList());
-        return tags;
+        List<TagEntity> tagEntities = new ArrayList<>();
+        tagRepository.findAll().forEach(tagEntities::add);
+        return tagEntities.stream().map(TagDTO::new).collect(Collectors.toList());
     }
 }
