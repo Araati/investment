@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,14 +57,14 @@ public class ProjectService {
 
     // TODO: 06.06.2022 Раньше здесь было ArrayList<Project> и сверху тоже. Возможно стоит вернуть?
     public List<ProjectDTO> findAll() {
-        List<ProjectDTO> projects;
-        projects = projectRepository.findAll().stream().map(ProjectDTO::new).collect(Collectors.toList());
-        return projects;
+        List<ProjectEntity> projectEntities = new ArrayList<>();
+        projectRepository.findAll().forEach(projectEntities::add);
+        return projectEntities.stream().map(ProjectDTO::new).collect(Collectors.toList());
     }
 
     public List<ProjectDTO> findByTitle(final ProjectFindDTO request) {
-        List<ProjectDTO> projects;
-        projects = projectRepository.findByTitleContainsIgnoreCase(request.getTitle()).stream().map(ProjectDTO::new).collect(Collectors.toList());
-        return projects;
+        List<ProjectEntity> projectEntities = new ArrayList<>();
+        projectRepository.findByTitleContainsIgnoreCase(request.getTitle()).forEach(projectEntities::add);
+        return projectEntities.stream().map(ProjectDTO::new).collect(Collectors.toList());
     }
 }
