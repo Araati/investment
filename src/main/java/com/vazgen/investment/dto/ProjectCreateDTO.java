@@ -39,7 +39,7 @@ public class ProjectCreateDTO {
     @JsonProperty(value = "preview", required = true)
     private String preview;
 
-    @JsonProperty(value = "tagList", required = true)
+    @JsonProperty(value = "tagList")
     private List<Long> tagList;
 
 
