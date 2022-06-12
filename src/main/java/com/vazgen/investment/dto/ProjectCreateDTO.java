@@ -12,9 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class ProjectCreateDTO {
 
-    // TODO: 06.06.2022 NOT EMPTY, NOT PLAIN
-    // TODO: 06.06.2022 А здесь вообще нужно required = true?
-
     @NotBlank
     @JsonProperty(value = "type", required = true)
     private String type;
@@ -23,7 +20,6 @@ public class ProjectCreateDTO {
     @JsonProperty(value = "status", required = true)
     private int status;
 
-    // TODO: 06.06.2022 А всегда ли нужны деньги?
     @JsonProperty(value = "requiredMoney", required = true)
     private long requiredMoney;
 

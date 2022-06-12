@@ -20,7 +20,6 @@ public class ProjectController {
 
     private final ProjectFacade projectFacade;
 
-    // TODO: 06.06.2022 Напомнить себе, зачем здесь Valid
     @PostMapping
     public Project create(@Valid @RequestBody final ProjectCreateDTO request)   {
         return projectFacade.create(request);
@@ -41,7 +40,6 @@ public class ProjectController {
         return projectFacade.findById(id);
     }
 
-    // TODO: 08.06.2022 Уточнить по URL
     @PostMapping("/title")
     public List<ProjectDTO> findByTitle(@RequestBody final ProjectFindDTO request)    {
         return projectFacade.findByTitle(request);
