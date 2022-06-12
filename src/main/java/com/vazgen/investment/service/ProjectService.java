@@ -40,7 +40,6 @@ public class ProjectService {
                 .withTagList(request.getTagList().orElse(entity.getTagList()))
                 .withUpdatedAt(LocalDateTime.now());
         // TODO: 06.06.2022 КОСТЫЛЬ НА updated_at
-        // TODO: 06.06.2022 TAG LIST
         projectRepository.save(entity);
         return new ProjectDTO(entity);
     }

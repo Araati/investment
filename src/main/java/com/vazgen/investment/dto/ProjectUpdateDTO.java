@@ -17,13 +17,13 @@ public class ProjectUpdateDTO {
     private String type;
 
     @JsonProperty(value = "status")
-    private int status;
+    private Integer status;
 
     @JsonProperty(value = "requiredMoney")
-    private long requiredMoney;
+    private Long requiredMoney;
 
     @JsonProperty(value = "collectedMoney")
-    private long collectedMoney;
+    private Long collectedMoney;
 
     @JsonProperty(value = "title")
     private String title;
@@ -41,23 +41,16 @@ public class ProjectUpdateDTO {
         return Optional.ofNullable(type);
     }
 
-    // TODO: 08.06.2022 Проверить, будет ли та же проблема, что и с RequiredMoney
     public Optional<Integer> getStatus()    {
         return Optional.ofNullable(status);
     }
 
     public Optional<Long> getRequiredMoney()   {
-        if(requiredMoney == 0)
-            return Optional.ofNullable(null);
-        else
-            return Optional.ofNullable(requiredMoney);
+        return Optional.ofNullable(requiredMoney);
     }
 
     public Optional<Long> getCollectedMoney()   {
-        if(collectedMoney == 0)
-            return Optional.ofNullable(null);
-        else
-            return Optional.ofNullable(collectedMoney);
+        return Optional.ofNullable(collectedMoney);
     }
 
     public Optional<String> getTitle()   {
