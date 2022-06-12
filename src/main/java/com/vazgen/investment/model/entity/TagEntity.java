@@ -27,7 +27,7 @@ public class TagEntity {
     private String label;
 
     @Column(name = "type")
-    private int type;
+    private String type;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

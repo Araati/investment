@@ -4,6 +4,6 @@ public interface Tag {
 
     long getId();
     String getLabel();
-    int getType();
+    String getType();
 
 }

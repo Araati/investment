@@ -15,13 +15,13 @@ public class TagUpdateDTO {
     private String label;
 
     @JsonProperty(value = "type")
-    private int type;
+    private String type;
 
     public Optional<String> getLabel()   {
         return Optional.ofNullable(label);
     }
 
-    public Optional<Integer> getType()    {
+    public Optional<String> getType()    {
         return Optional.ofNullable(type);
     }
 

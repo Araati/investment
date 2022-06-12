@@ -16,10 +16,10 @@ public class TagCreateDTO {
     private String label;
 
     @JsonProperty(value = "type", required = true)
-    private int type;
+    private String type;
 
     @JsonCreator
-    public TagCreateDTO(final String label, final int type) {
+    public TagCreateDTO(final String label, final String type) {
         this.label = label;
         this.type = type;
     }

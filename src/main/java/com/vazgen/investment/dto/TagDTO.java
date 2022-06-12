@@ -16,7 +16,7 @@ public class TagDTO implements Tag {
 
     private long id;
     private String label;
-    private int type;
+    private String type;
     private LocalDateTime createdAt;
     private Optional<LocalDateTime> updatedAt;
 
