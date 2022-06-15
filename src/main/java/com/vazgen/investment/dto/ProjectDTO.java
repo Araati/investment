@@ -21,6 +21,7 @@ public class ProjectDTO implements Project {
     private long requiredMoney;
     private long collectedMoney;
     private String title;
+    // TODO: 15.06.2022 Выдавать общий список без article
     private String article;
     private String preview;
     private List<Long> tagList;

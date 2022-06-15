@@ -69,4 +69,8 @@ public class ProjectUpdateDTO {
         return Optional.ofNullable(tagList);
     }
 
+    public ProjectUpdateDTO(final long money)   {
+        this.collectedMoney = money;
+    }
+
 }

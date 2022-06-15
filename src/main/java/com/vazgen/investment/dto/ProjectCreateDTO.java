@@ -19,6 +19,7 @@ public class ProjectCreateDTO {
     @JsonProperty(value = "status", required = true)
     private int status;
 
+    // TODO: 16.06.2022 @Positive
     @JsonProperty(value = "requiredMoney", required = true)
     private long requiredMoney;
 
