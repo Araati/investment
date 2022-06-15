@@ -16,7 +16,6 @@ public class ProjectCreateDTO {
     @JsonProperty(value = "type", required = true)
     private String type;
 
-    // TODO: 08.06.2022 А нужен ли status при создании?
     @JsonProperty(value = "status", required = true)
     private int status;
 

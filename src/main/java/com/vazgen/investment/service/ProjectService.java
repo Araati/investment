@@ -54,7 +54,6 @@ public class ProjectService {
         return new ProjectDTO(projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project", id)));
     }
 
-    // TODO: 06.06.2022 Раньше здесь было ArrayList<Project> и сверху тоже. Возможно стоит вернуть?
     public List<ProjectDTO> findAll() {
         List<ProjectEntity> projectEntities = new ArrayList<>();
         projectRepository.findAll().forEach(projectEntities::add);
