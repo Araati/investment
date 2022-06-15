@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.util.List;
 
 @Getter
@@ -19,7 +20,7 @@ public class ProjectCreateDTO {
     @JsonProperty(value = "status", required = true)
     private int status;
 
-    // TODO: 16.06.2022 @Positive
+    @Positive
     @JsonProperty(value = "requiredMoney", required = true)
     private long requiredMoney;
 
