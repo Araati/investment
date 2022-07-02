@@ -12,7 +12,7 @@ public interface PrincipalHolder {
         return getPrincipal().orElseThrow(() -> new AccessDeniedException("Undefined principal"));
     }
 
-    Optional<String> getAccessToken();
+    /*Optional<String> getAccessToken();
 
     default String mustGetAccessToken() {
         return getAccessToken().orElseThrow(() -> new RuntimeException("Not found access token"));
@@ -20,5 +20,5 @@ public interface PrincipalHolder {
 
     default boolean isAuthorized() {
         return getAccessToken().isPresent();
-    }
+    }*/
 }

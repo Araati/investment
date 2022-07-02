@@ -12,12 +12,12 @@ public class SecurityContextPrincipalHolder implements PrincipalHolder {
                 .map(x -> (Principal) x.getPrincipal());
     }
 
-    @Override
+    /*@Override
     public Optional<String> getAccessToken() {
         return Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
                 .filter(Authentication::isAuthenticated)
                 .filter(x -> !x.getPrincipal().equals("anonymousUser"))
                 .filter(x -> !((String)x.getCredentials()).isBlank())
                 .map(x -> (String) x.getCredentials());
-    }
+    }*/
 }
