@@ -5,9 +5,7 @@ import com.vazgen.investment.security.principal.DefaultPrincipal;
 import com.vazgen.investment.security.principal.Principal;
 import com.vazgen.investment.security.principal.TokenIssuer;
 import com.vazgen.investment.security.token.JwtAuthentication;
-import com.vazgen.investment.service.UserDetailsService;
 import com.vazgen.investment.service.UserService;
-import com.vazgen.investment.util.UserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -21,7 +19,6 @@ import java.util.HashSet;
 public class UserCredentialsAuthenticationProvider implements AuthenticationProvider {
 
     private final PasswordEncoder passwordEncoder;
-    private final UserDetailsService userDetailsService;
     private final UserService userService;
     private final TokenIssuer tokenIssuer;
 
@@ -32,21 +29,6 @@ public class UserCredentialsAuthenticationProvider implements AuthenticationProv
         final String password = (String) authentication.getCredentials();
         final User user = userService.findByUsername(username)
                 .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("User not found"));
-        final UserDetails userDetails = userDetailsService.findByUserId(user.getId())
-                .orElseThrow(() -> new RuntimeException("User details not found"));
-
-        if (!user.isEnabled()) {
-            throw new DisabledException("User is disabled");
-        }
-        if (!user.isAccountNonLocked()) {
-            throw new LockedException("User is locked");
-        }
-        if (!user.isAccountNonExpired()) {
-            throw new AccountExpiredException("Account expired");
-        }
-        if (!user.isCredentialsNonExpired()) {
-            throw new CredentialsExpiredException("Credentials expired");
-        }
 
         verifyCredentials(user, password);
 

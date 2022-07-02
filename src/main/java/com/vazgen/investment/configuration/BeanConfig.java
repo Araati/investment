@@ -11,7 +11,6 @@ import com.vazgen.investment.security.principal.TokenIssuer;
 import com.vazgen.investment.security.provider.JwtTokenAuthenticationProvider;
 import com.vazgen.investment.security.provider.UserCredentialsAuthenticationProvider;
 import com.vazgen.investment.security.verifier.JwtAuthenticationVerifier;
-import com.vazgen.investment.service.UserDetailsService;
 import com.vazgen.investment.service.UserService;
 import com.vazgen.investment.util.DefaultRequestIdHolder;
 import lombok.RequiredArgsConstructor;
@@ -64,13 +63,11 @@ public class BeanConfig {
     public UserCredentialsAuthenticationProvider userCredentialsAuthenticationProvider(
             final TokenIssuer tokenIssuer,
             final PasswordEncoder passwordEncoder,
-            final UserDetailsService userDetailsService,
             final UserService userService
     ) {
 
         return new UserCredentialsAuthenticationProvider(
                 passwordEncoder,
-                userDetailsService,
                 userService,
                 tokenIssuer
         );

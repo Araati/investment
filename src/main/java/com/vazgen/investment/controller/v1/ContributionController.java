@@ -1,6 +1,5 @@
 package com.vazgen.investment.controller.v1;
 
-import com.vazgen.investment.dao.UserDetailsRepository;
 import com.vazgen.investment.dao.UserRepository;
 import com.vazgen.investment.dto.ContributionCreateDTO;
 import com.vazgen.investment.dto.ContributionUpdateDTO;
@@ -10,7 +9,6 @@ import com.vazgen.investment.facade.ContributionFacade;
 import com.vazgen.investment.facade.UserFacade;
 import com.vazgen.investment.model.Contribution;
 import com.vazgen.investment.model.entity.UserAuthorityEntity;
-import com.vazgen.investment.model.entity.UserDetailsEntity;
 import com.vazgen.investment.model.entity.UserEntity;
 import com.vazgen.investment.security.User;
 import com.vazgen.investment.security.permission.Authority;
@@ -33,7 +31,6 @@ public class ContributionController {
 
     private final ContributionFacade contributionFacade;
     private final UserRepository userRepository;
-    private final UserDetailsRepository userDetailsRepository;
     private final UserFacade userFacade;
     private final PasswordEncoder passwordEncoder;
 
@@ -67,30 +64,17 @@ public class ContributionController {
 
     @GetMapping("/trigger")
     public void trigger()   {
-        final String adminUsername = "TestAdmin";
-        final Optional<User> admin = userRepository.findByUsername(adminUsername).map(UserDTO::new);
-        if (admin.isEmpty()) {
-            userFacade.create(new UserCreateDTO(adminUsername, "123123", List.of(Authority.ROLE_ADMIN)));
-        }
-
-        final String userUsername = "TestUser";
-        final Optional<User> user = userRepository.findByUsername(userUsername).map(UserDTO::new);
-        if(user.isEmpty()) {
-            userFacade.create(new UserCreateDTO(userUsername, "123123", List.of(Authority.ROLE_USER)));
-        }
-
-        final Optional<User> engine = userRepository.findByUsername("engine").map(UserDTO::new);
+        final Optional<User> engine = userRepository.findByUsername("admin").map(UserDTO::new);
         if (engine.isEmpty()) {
             final UserEntity newUser = userRepository.save(new UserEntity(
                     0,
-                    "TestSystem",
+                    "admin",
                     passwordEncoder.encode("123123"),
-                    List.of(Authority.ROLE_SYSTEM).stream().map(UserAuthorityEntity::new).collect(Collectors.toList()),
+                    List.of(Authority.ROLE_ADMIN).stream().map(UserAuthorityEntity::new).collect(Collectors.toList()),
                     true,
                     LocalDateTime.now(),
                     null
             ));
-            userDetailsRepository.save(new UserDetailsEntity(newUser.getId()));
         }
     }
 

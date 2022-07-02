@@ -1,19 +1,13 @@
 package com.vazgen.investment.service.impl;
 
-import com.vazgen.investment.dao.UserDetailsRepository;
 import com.vazgen.investment.dao.UserRepository;
 import com.vazgen.investment.dto.UserDTO;
-import com.vazgen.investment.dto.UserDetailsDTO;
-import com.vazgen.investment.exception.ResourceNotFoundException;
 import com.vazgen.investment.model.entity.UserAuthorityEntity;
-import com.vazgen.investment.model.entity.UserDetailsEntity;
 import com.vazgen.investment.model.entity.UserEntity;
 import com.vazgen.investment.security.User;
 import com.vazgen.investment.service.UserService;
 import com.vazgen.investment.util.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +22,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserDetailsRepository userDetailsRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -38,8 +31,6 @@ public class UserServiceImpl implements UserService {
                 passwordEncoder.encode(data.getPassword()),
                 data.getAuthorities()
         )));
-
-        userDetailsRepository.save(new UserDetailsEntity(user.getId()));
 
         return user;
     }
@@ -55,14 +46,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDetails> findUserDetailsByUserId(final long id) {
-        return userDetailsRepository.findByUserId(id).map(UserDetailsDTO::new);
-    }
-
-    @Override
     public User update(final long id, final UserUpdateRequest data) {
         UserEntity entity = userRepository.mustFindById(id);
-        entity = entity.withEnabled(data.isEnabled().orElse(entity.isEnabled()));
         if(data.getAuthorities().isPresent()){
             final List<UserAuthorityEntity> newAuthorities = data.getAuthorities()
                     .get()
@@ -73,5 +58,4 @@ public class UserServiceImpl implements UserService {
         }
         return new UserDTO(userRepository.save(entity));
     }
-
 }

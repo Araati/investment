@@ -4,8 +4,6 @@ import com.vazgen.investment.dto.UserDTO;
 import com.vazgen.investment.exception.ResourceNotFoundException;
 import com.vazgen.investment.security.User;
 import com.vazgen.investment.util.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -25,8 +23,6 @@ public interface UserService extends UserDetailsService {
     Optional<User> findById(long id);
 
     Optional<User> findByUsername(String username);
-
-    Optional<UserDetails> findUserDetailsByUserId(long id);
 
     default User mustFindById(final long id){
         return findById(id).map(UserDTO::new).orElseThrow(() -> new ResourceNotFoundException("User", id));

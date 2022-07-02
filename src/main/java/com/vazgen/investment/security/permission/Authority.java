@@ -14,9 +14,7 @@ import java.util.stream.Collectors;
 @Getter
 public enum Authority implements GrantedAuthority {
 
-    ROLE_ADMIN(1),
-    ROLE_USER(2),
-    ROLE_SYSTEM(3);
+    ROLE_ADMIN(1);
 
     private static final Map<Integer, Authority> AUTHORITY_MAP;
 
