@@ -4,7 +4,7 @@ import com.vazgen.investment.dao.UserDetailsRepository;
 import com.vazgen.investment.dao.UserRepository;
 import com.vazgen.investment.dto.ContributionCreateDTO;
 import com.vazgen.investment.dto.ContributionUpdateDTO;
-import com.vazgen.investment.dto.UserCreationDTO;
+import com.vazgen.investment.dto.UserCreateDTO;
 import com.vazgen.investment.dto.UserDTO;
 import com.vazgen.investment.facade.ContributionFacade;
 import com.vazgen.investment.facade.UserFacade;
@@ -67,25 +67,23 @@ public class ContributionController {
 
     @GetMapping("/trigger")
     public void trigger()   {
-        final String adminEmail = "admin@leoramstories.com";
-        final Optional<User> admin = userRepository.findByEmail(adminEmail).map(UserDTO::new);
+        final String adminUsername = "TestAdmin";
+        final Optional<User> admin = userRepository.findByUsername(adminUsername).map(UserDTO::new);
         if (admin.isEmpty()) {
-            userFacade.create(new UserCreationDTO("admin", adminEmail, "123123", List.of(Authority.ROLE_ADMIN)));
+            userFacade.create(new UserCreateDTO(adminUsername, "123123", List.of(Authority.ROLE_ADMIN)));
         }
 
-        final String userEmail = "user@leoramstories.com";
-        final Optional<User> user = userRepository.findByEmail(userEmail).map(UserDTO::new);
+        final String userUsername = "TestUser";
+        final Optional<User> user = userRepository.findByUsername(userUsername).map(UserDTO::new);
         if(user.isEmpty()) {
-            userFacade.create(new UserCreationDTO("test-user", userEmail, "123123", List.of(Authority.ROLE_USER)));
+            userFacade.create(new UserCreateDTO(userUsername, "123123", List.of(Authority.ROLE_USER)));
         }
 
-        final Optional<User> engine = userRepository.findByEmail("engine@leoramstories.com").map(UserDTO::new);
+        final Optional<User> engine = userRepository.findByUsername("engine").map(UserDTO::new);
         if (engine.isEmpty()) {
             final UserEntity newUser = userRepository.save(new UserEntity(
                     0,
-                    "engine@leoramstories.com",
-                    true,
-                    "engine@leoramstories.com",
+                    "TestSystem",
                     passwordEncoder.encode("123123"),
                     List.of(Authority.ROLE_SYSTEM).stream().map(UserAuthorityEntity::new).collect(Collectors.toList()),
                     true,

@@ -22,9 +22,6 @@ public class DefaultPrincipal implements Principal {
     @JsonProperty(value = "username", required = true)
     private String username;
 
-    @JsonProperty(value = "person_id", required = true)
-    private String personId;
-
     @JsonProperty(value = "expired_in", required = true)
     @JsonDeserialize(converter = TimestampToLocalDateTimeDeserializer.class)
     @JsonSerialize(converter = LocalDateTimeToTimestampSerializer.class)

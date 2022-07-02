@@ -2,8 +2,8 @@ package com.vazgen.investment.util;
 
 import java.util.Optional;
 
-public interface UserDetailsCreation {
+public interface UserDetailsCreate {
 
     long getUserId();
-    Optional<String> getPersonId();
+
 }

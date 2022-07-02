@@ -1,6 +1,5 @@
 package com.vazgen.investment.security.provider;
 
-import com.vazgen.investment.exception.EmailNotConfirmedException;
 import com.vazgen.investment.security.User;
 import com.vazgen.investment.security.principal.DefaultPrincipal;
 import com.vazgen.investment.security.principal.Principal;
@@ -28,9 +27,10 @@ public class UserCredentialsAuthenticationProvider implements AuthenticationProv
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
-        final String email = (String) authentication.getPrincipal();
+        // TODO: 02.07.2022 ЧТО ЗДЕСЬ БУДЕТ ПОД USERNAME?
+        final String username = (String) authentication.getPrincipal();
         final String password = (String) authentication.getCredentials();
-        final User user = userService.findByEmail(email)
+        final User user = userService.findByUsername(username)
                 .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("User not found"));
         final UserDetails userDetails = userDetailsService.findByUserId(user.getId())
                 .orElseThrow(() -> new RuntimeException("User details not found"));
@@ -47,16 +47,12 @@ public class UserCredentialsAuthenticationProvider implements AuthenticationProv
         if (!user.isCredentialsNonExpired()) {
             throw new CredentialsExpiredException("Credentials expired");
         }
-        if (!user.isEmailConfirmed()) {
-            throw new EmailNotConfirmedException();
-        }
 
         verifyCredentials(user, password);
 
         Principal principal = new DefaultPrincipal(
                 String.valueOf(user.getId()),
                 user.getUsername(),
-                userDetails.getPersonId().orElse(null),
                 LocalDateTime.now().plusHours(1),
                 new HashSet<>(user.getAuthorities())
         );

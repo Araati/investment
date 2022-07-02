@@ -5,7 +5,7 @@ import com.vazgen.investment.dto.UserDetailsDTO;
 import com.vazgen.investment.model.entity.UserDetailsEntity;
 import com.vazgen.investment.service.UserDetailsService;
 import com.vazgen.investment.util.UserDetails;
-import com.vazgen.investment.util.UserDetailsCreation;
+import com.vazgen.investment.util.UserDetailsCreate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,10 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails create(final UserDetailsCreation dto) {
+    public UserDetails create(final UserDetailsCreate dto) {
         return new UserDetailsDTO(detailsRepository.save(new UserDetailsEntity(
-                dto.getUserId(),
-                dto.getPersonId().orElse(null)
+                dto.getUserId()
         )));
     }
 }

@@ -22,6 +22,4 @@ public class UserAuthorityEntity {
         this.authority = authority;
     }
 
-    // TODO: 28.06.2022 Сократить если требуется
-
 }

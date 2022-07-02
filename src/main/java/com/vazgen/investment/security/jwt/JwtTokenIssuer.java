@@ -55,7 +55,6 @@ public class JwtTokenIssuer implements TokenIssuer {
 
         return new JWTClaimsSet.Builder()
                 .subject(payload.getSubject())
-                .claim("person_id", payload.getPersonId())
                 .claim("username", payload.getUsername())
                 .claim("expires_in", payload.getTokenExpirationDate().toEpochSecond(ZoneOffset.UTC))
                 .claim("permissions", permissionsJSON)

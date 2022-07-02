@@ -28,12 +28,6 @@ public class UserDTO implements User {
     @JsonProperty(value = "id", required = true)
     private long id;
 
-    @JsonProperty(value = "email", required = true)
-    private String email;
-
-    @JsonProperty(value = "email_confirmed", required = true)
-    private boolean emailConfirmed;
-
     @Getter(AccessLevel.NONE)
     @JsonProperty(value = "username")
     private String username;
@@ -56,8 +50,6 @@ public class UserDTO implements User {
     public UserDTO(final UserEntity source) {
         this(
                 source.getId(),
-                source.getEmail(),
-                source.isEmailConfirmed(),
                 source.getUsername(),
                 source.getPassword(),
                 source.getAuthorities().stream().map(UserAuthorityEntity::getAuthority).collect(Collectors.toList()),
@@ -70,8 +62,6 @@ public class UserDTO implements User {
     public UserDTO(final User source) {
         this(
                 source.getId(),
-                source.getEmail(),
-                source.isEmailConfirmed(),
                 source.getUsername(),
                 source.getPassword(),
                 source.getAuthorities(),
@@ -88,6 +78,7 @@ public class UserDTO implements User {
 
     @Override
     public String getUsername() {
-        return username == null ? email.substring(0, email.indexOf("@")) : username;
+        return username;
     }
+
 }

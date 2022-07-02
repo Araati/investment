@@ -1,11 +1,7 @@
 package com.vazgen.investment.util;
 
-import com.vazgen.investment.model.IdReference;
+public interface UserDetails    {
 
-import java.util.Optional;
-
-public interface UserDetails extends IdReference {
-
+    long getId();
     long getUserId();
-    Optional<String> getPersonId();
 }

@@ -1,7 +1,6 @@
 package com.vazgen.investment.model.entity;
 
 import com.vazgen.investment.security.permission.Authority;
-import com.vazgen.investment.model.IdReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -19,18 +18,12 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode
 @ToString
 @Getter
-public class UserEntity implements IdReference {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private long id;
-
-    @Column(name = "email", nullable = false, unique = true)
-    private String email;
-
-    @Column(name = "email_confirmed", nullable = false)
-    private boolean emailConfirmed;
 
     @Column(name = "username")
     private String username;
@@ -55,15 +48,12 @@ public class UserEntity implements IdReference {
 
     public UserEntity(
             final String username,
-            final String email,
             final String password,
             final List<Authority> authorities
     ) {
         this.username = username;
-        this.email = email;
         this.password = password;
         this.authorities = authorities.stream().map(UserAuthorityEntity::new).collect(Collectors.toList());
         this.enabled = true;
-        this.emailConfirmed = true;//todo: OTP password for confirmation
     }
 }

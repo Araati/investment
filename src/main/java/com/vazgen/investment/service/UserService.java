@@ -13,24 +13,20 @@ import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
 
-    User create(UserCreation data);
+    User create(UserCreate data);
 
     User update(long id, UserUpdateRequest data);
 
-    UserDetails update(long id, UserDetailsUpdateRequestDTO data);
-
     @Override
     default org.springframework.security.core.userdetails.UserDetails loadUserByUsername(final String s) throws UsernameNotFoundException {
-        return findByEmail(s).map(UserDTO::new).orElseThrow(() -> new ResourceNotFoundException("User", s));
+        return findByUsername(s).map(UserDTO::new).orElseThrow(() -> new ResourceNotFoundException("User", s));
     }
 
     Optional<User> findById(long id);
 
-    Optional<User> findByEmail(String email);
+    Optional<User> findByUsername(String username);
 
     Optional<UserDetails> findUserDetailsByUserId(long id);
-
-    Page<User> findByCriteria(PageableUserCriteria criteria, Pageable pageable);
 
     default User mustFindById(final long id){
         return findById(id).map(UserDTO::new).orElseThrow(() -> new ResourceNotFoundException("User", id));

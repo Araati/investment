@@ -8,7 +8,6 @@ import java.util.Set;
 
 public interface Principal extends Serializable {
     String getSubject();
-    String getPersonId();
     String getUsername();
     LocalDateTime getTokenExpirationDate();
     Set<Authority> getAuthorities();

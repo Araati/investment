@@ -8,6 +8,5 @@ import java.util.Optional;
 public interface UserUpdateRequest {
 
     Optional<Boolean> isEnabled();
-    Optional<Boolean> isEmailConfirmed();
     Optional<List<Authority>> getAuthorities();
 }

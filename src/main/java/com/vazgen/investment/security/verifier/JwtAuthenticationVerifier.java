@@ -56,7 +56,6 @@ public class JwtAuthenticationVerifier implements AuthenticationVerifier {
     private DefaultPrincipal parse(final SignedJWT jwt) {
         final Map<String, Object> objectMap = jwt.getPayload().toJSONObject();
         String subject = (String) objectMap.get("sub");
-        String personId = (String) objectMap.getOrDefault("person_id", "-1");
         String username = (String) objectMap.get("username");
         long timestamp = (long) objectMap.get("expires_in");
         LocalDateTime expiresIn = LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneOffset.UTC).withNano(0);
@@ -65,7 +64,7 @@ public class JwtAuthenticationVerifier implements AuthenticationVerifier {
         final Set<Authority> authorities = array.stream()
                 .map(x -> Authority.fromValue(((long) x)))
                 .collect(Collectors.toSet());
-        return new DefaultPrincipal(subject, username, personId, expiresIn, authorities);
+        return new DefaultPrincipal(subject, username, expiresIn, authorities);
     }
 
     private boolean isValid(final SignedJWT jwt) {

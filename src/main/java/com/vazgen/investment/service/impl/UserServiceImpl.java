@@ -32,10 +32,9 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public User create(final UserCreation data) {
+    public User create(final UserCreate data) {
         User user = new UserDTO(userRepository.save(new UserEntity(
                 data.getUsername(),
-                data.getEmail(),
                 passwordEncoder.encode(data.getPassword()),
                 data.getAuthorities()
         )));
@@ -51,8 +50,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(final String email) {
-        return userRepository.findByEmail(email).map(UserDTO::new);
+    public Optional<User> findByUsername(final String username) {
+        return userRepository.findByUsername(username).map(UserDTO::new);
     }
 
     @Override
@@ -61,17 +60,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> findByCriteria(
-            final PageableUserCriteria criteria, final Pageable pageable
-    ) {
-        return userRepository.findByCriteria(criteria, pageable);
-    }
-
-    @Override
     public User update(final long id, final UserUpdateRequest data) {
         UserEntity entity = userRepository.mustFindById(id);
-        entity = entity.withEnabled(data.isEnabled().orElse(entity.isEnabled()))
-                .withEmailConfirmed(data.isEmailConfirmed().orElse(entity.isEmailConfirmed()));
+        entity = entity.withEnabled(data.isEnabled().orElse(entity.isEnabled()));
         if(data.getAuthorities().isPresent()){
             final List<UserAuthorityEntity> newAuthorities = data.getAuthorities()
                     .get()
@@ -83,10 +74,4 @@ public class UserServiceImpl implements UserService {
         return new UserDTO(userRepository.save(entity));
     }
 
-    public UserDetails update(final long id, final UserDetailsUpdateRequestDTO data) {
-        final UserDetailsEntity detailsEntity = userDetailsRepository.findByUserId(id)
-                .orElseThrow(() -> new ResourceNotFoundException("UserDetails.user_id", id));
-
-        return new UserDetailsDTO(userDetailsRepository.save(detailsEntity.withPersonId(data.getPersonId())));
-    }
 }
