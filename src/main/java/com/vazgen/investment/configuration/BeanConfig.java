@@ -1,18 +1,15 @@
 package com.vazgen.investment.configuration;
 
-import com.vazgen.investment.security.DefaultGuard;
 import com.vazgen.investment.security.Guard;
 import com.vazgen.investment.security.handler.CommonAuthenticationFailureHandler;
 import com.vazgen.investment.security.jwt.JwtTokenIssuer;
-import com.vazgen.investment.security.principal.AuthenticationVerifier;
 import com.vazgen.investment.security.principal.PrincipalHolder;
 import com.vazgen.investment.security.principal.SecurityContextPrincipalHolder;
-import com.vazgen.investment.security.principal.TokenIssuer;
 import com.vazgen.investment.security.provider.JwtTokenAuthenticationProvider;
 import com.vazgen.investment.security.provider.UserCredentialsAuthenticationProvider;
 import com.vazgen.investment.security.verifier.JwtAuthenticationVerifier;
 import com.vazgen.investment.service.UserService;
-import com.vazgen.investment.util.DefaultRequestIdHolder;
+import com.vazgen.investment.util.RequestIdHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -36,11 +33,11 @@ public class BeanConfig {
 
     @Bean
     public Guard guard(final PrincipalHolder principalHolder) {
-        return new DefaultGuard(principalHolder);
+        return new Guard(principalHolder);
     }
 
     @Bean
-    public AuthenticationVerifier authenticationVerifier(@Value("${auth.secret}") final String secret) {
+    public JwtAuthenticationVerifier authenticationVerifier(@Value("${auth.secret}") final String secret) {
         return new JwtAuthenticationVerifier(secret);
     }
 
@@ -50,18 +47,18 @@ public class BeanConfig {
     }
 
     @Bean
-    public DefaultRequestIdHolder requestIdHolder() {
-        return new DefaultRequestIdHolder();
+    public RequestIdHolder requestIdHolder() {
+        return new RequestIdHolder();
     }
 
     @Bean
-    public TokenIssuer tokenIssuer(@Value("${auth.secret}") final String secret) {
+    public JwtTokenIssuer tokenIssuer(@Value("${auth.secret}") final String secret) {
         return new JwtTokenIssuer(secret);
     }
 
     @Bean
     public UserCredentialsAuthenticationProvider userCredentialsAuthenticationProvider(
-            final TokenIssuer tokenIssuer,
+            final JwtTokenIssuer tokenIssuer,
             final PasswordEncoder passwordEncoder,
             final UserService userService
     ) {

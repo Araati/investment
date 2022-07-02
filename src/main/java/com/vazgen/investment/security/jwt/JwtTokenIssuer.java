@@ -11,12 +11,11 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.vazgen.investment.security.permission.Authority;
 import com.vazgen.investment.security.principal.Principal;
-import com.vazgen.investment.security.principal.TokenIssuer;
 
 import java.time.ZoneOffset;
 import java.util.stream.Collectors;
 
-public class JwtTokenIssuer implements TokenIssuer {
+public class JwtTokenIssuer {
 
     private final JWSSigner signer;
     private final JWSAlgorithm algo;
@@ -31,7 +30,6 @@ public class JwtTokenIssuer implements TokenIssuer {
         }
     }
 
-    @Override
     public String sign(final Principal principal) {
         JWTClaimsSet claimsSet = constructClaimSet(principal);
         SignedJWT preparedJwt = new SignedJWT(new JWSHeader(algo), claimsSet);

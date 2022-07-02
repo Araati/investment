@@ -1,30 +1,49 @@
 package com.vazgen.investment.service;
 
+import com.vazgen.investment.dao.UserRepository;
+import com.vazgen.investment.dto.UserCreateDTO;
 import com.vazgen.investment.dto.UserDTO;
 import com.vazgen.investment.exception.ResourceNotFoundException;
+import com.vazgen.investment.model.entity.UserEntity;
 import com.vazgen.investment.security.User;
-import com.vazgen.investment.util.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-public interface UserService extends UserDetailsService {
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class UserService implements UserDetailsService {
 
-    User create(UserCreate data);
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    User update(long id, UserUpdateRequest data);
+    public User create(final UserCreateDTO data) {
+        User user = new UserDTO(userRepository.save(new UserEntity(
+                data.getUsername(),
+                passwordEncoder.encode(data.getPassword()),
+                data.getAuthorities()
+        )));
 
-    @Override
-    default org.springframework.security.core.userdetails.UserDetails loadUserByUsername(final String s) throws UsernameNotFoundException {
-        return findByUsername(s).map(UserDTO::new).orElseThrow(() -> new ResourceNotFoundException("User", s));
+        return user;
     }
 
-    Optional<User> findById(long id);
+    public Optional<User> findById(final long id) {
+        return userRepository.findById(id).map(UserDTO::new);
+    }
 
-    Optional<User> findByUsername(String username);
+    public Optional<User> findByUsername(final String username) {
+        return userRepository.findByUsername(username).map(UserDTO::new);
+    }
 
-    default User mustFindById(final long id){
-        return findById(id).map(UserDTO::new).orElseThrow(() -> new ResourceNotFoundException("User", id));
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return findByUsername(username).map(UserDTO::new).orElseThrow(() -> new ResourceNotFoundException("User", username));
     }
 }

@@ -1,13 +1,14 @@
 package com.vazgen.investment.security;
 
 import com.vazgen.investment.security.permission.Authority;
+import com.vazgen.investment.security.principal.PrincipalHolder;
+import lombok.RequiredArgsConstructor;
 
-public interface Guard {
+@RequiredArgsConstructor
+public class Guard {
 
-    boolean has(Authority authority);
-
-    default boolean isAdmin() {
-        return has(Authority.ROLE_ADMIN);
+    private final PrincipalHolder principalHolder;
+    public boolean has(final Authority authority) {
+        return principalHolder.get().getAuthorities().contains(authority);
     }
-
 }

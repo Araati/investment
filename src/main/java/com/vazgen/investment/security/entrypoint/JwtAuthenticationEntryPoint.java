@@ -18,13 +18,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
             final HttpServletResponse response,
             final AuthenticationException authException
     ) throws IOException {
-        /*log.warn(
-                "Unsuccessful authentication attempt - {}, {}. Exc. type: [{}], Message: {}",
-                request.getRequestURI(),
-                request.getMethod(),
-                authException.getClass().getName(),
-                authException.getMessage()
-        )*/;
 
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.TEXT_PLAIN_VALUE);

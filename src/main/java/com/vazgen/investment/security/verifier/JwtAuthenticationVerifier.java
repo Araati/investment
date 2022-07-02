@@ -7,7 +7,6 @@ import com.nimbusds.jose.shaded.json.JSONArray;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import com.nimbusds.jwt.SignedJWT;
 import com.vazgen.investment.security.permission.Authority;
-import com.vazgen.investment.security.principal.AuthenticationVerifier;
 import com.vazgen.investment.security.principal.DefaultPrincipal;
 import com.vazgen.investment.security.principal.Principal;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -20,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class JwtAuthenticationVerifier implements AuthenticationVerifier {
+public class JwtAuthenticationVerifier  {
 
     private final JWSVerifier verifier;
 
@@ -32,7 +31,6 @@ public class JwtAuthenticationVerifier implements AuthenticationVerifier {
         }
     }
 
-    @Override
     public Principal verify(final String token) {
         SignedJWT jwt = parse(token);
         if (!isValid(jwt)) {

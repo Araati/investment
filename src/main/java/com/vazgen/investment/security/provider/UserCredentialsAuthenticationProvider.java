@@ -1,9 +1,9 @@
 package com.vazgen.investment.security.provider;
 
 import com.vazgen.investment.security.User;
+import com.vazgen.investment.security.jwt.JwtTokenIssuer;
 import com.vazgen.investment.security.principal.DefaultPrincipal;
 import com.vazgen.investment.security.principal.Principal;
-import com.vazgen.investment.security.principal.TokenIssuer;
 import com.vazgen.investment.security.token.JwtAuthentication;
 import com.vazgen.investment.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class UserCredentialsAuthenticationProvider implements AuthenticationProv
 
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
-    private final TokenIssuer tokenIssuer;
+    private final JwtTokenIssuer tokenIssuer;
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenResponse implements AccessToken {
+public class TokenResponse  {
     @Getter
     @JsonProperty(value = "access_token", required = true)
     private String accessToken;

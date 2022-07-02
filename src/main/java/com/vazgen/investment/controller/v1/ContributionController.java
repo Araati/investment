@@ -3,10 +3,8 @@ package com.vazgen.investment.controller.v1;
 import com.vazgen.investment.dao.UserRepository;
 import com.vazgen.investment.dto.ContributionCreateDTO;
 import com.vazgen.investment.dto.ContributionUpdateDTO;
-import com.vazgen.investment.dto.UserCreateDTO;
 import com.vazgen.investment.dto.UserDTO;
 import com.vazgen.investment.facade.ContributionFacade;
-import com.vazgen.investment.facade.UserFacade;
 import com.vazgen.investment.model.Contribution;
 import com.vazgen.investment.model.entity.UserAuthorityEntity;
 import com.vazgen.investment.model.entity.UserEntity;
@@ -31,7 +29,6 @@ public class ContributionController {
 
     private final ContributionFacade contributionFacade;
     private final UserRepository userRepository;
-    private final UserFacade userFacade;
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping
@@ -62,6 +59,7 @@ public class ContributionController {
         return contributionFacade.findAll();
     }
 
+    // FIXME: 02.07.2022 КОСТЫЛЬ СТРАШНЫЙ
     @GetMapping("/trigger")
     public void trigger()   {
         final Optional<User> engine = userRepository.findByUsername("admin").map(UserDTO::new);

@@ -18,6 +18,4 @@ public class UserAuthorityConverter implements AttributeConverter<Authority, Int
         return integer == null ? null : Authority.fromValue(integer);
     }
 
-    // TODO: 28.06.2022 Сократить если требуется 
-
 }

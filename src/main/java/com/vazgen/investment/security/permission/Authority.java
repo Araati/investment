@@ -56,6 +56,4 @@ public enum Authority implements GrantedAuthority {
         return this.name();
     }
 
-    // TODO: 28.06.2022 Выпилить ненужное
-
 }

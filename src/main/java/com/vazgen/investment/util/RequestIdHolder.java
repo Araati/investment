@@ -1,23 +1,22 @@
 package com.vazgen.investment.util;
 
+import org.slf4j.MDC;
+
 import java.util.Optional;
 import java.util.UUID;
 
-public interface RequestIdHolder {
+public class RequestIdHolder {
 
-    Optional<UUID> get();
-
-    default UUID mustGet(){
-        return get().orElseThrow(RuntimeException::new);
+    // TODO: 02.07.2022 Надо бы выпилить
+    public Optional<UUID> get() {
+        return Optional.ofNullable(MDC.get("request_id")).map(UUID::fromString);
     }
 
-//	default boolean isEmpty(){
-//		return get().isEmpty();
-//	}
-
-    default boolean isPresent(){
-        return get().isPresent();
+    public void save(final UUID id) {
+        MDC.put("request_id", id.toString());
     }
 
-    void save(UUID id);
+    public UUID generate() {
+        return UUID.randomUUID();
+    }
 }

@@ -1,9 +1,9 @@
 package com.vazgen.investment.security.provider;
 
-import com.vazgen.investment.security.principal.AuthenticationVerifier;
 import com.vazgen.investment.security.principal.Principal;
 import com.vazgen.investment.security.token.BearerTokenAuthenticationToken;
 import com.vazgen.investment.security.token.JwtAuthentication;
+import com.vazgen.investment.security.verifier.JwtAuthenticationVerifier;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.CredentialsExpiredException;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class JwtTokenAuthenticationProvider implements AuthenticationProvider {
 
-    private final AuthenticationVerifier verifier;
+    private final JwtAuthenticationVerifier verifier;
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {

@@ -2,7 +2,6 @@ package com.vazgen.investment.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vazgen.investment.security.permission.Authority;
-import com.vazgen.investment.util.UserCreate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class UserCreateDTO implements UserCreate {
+public class UserCreateDTO {
 
     @JsonProperty(value = "username", required = true)
     private String username;

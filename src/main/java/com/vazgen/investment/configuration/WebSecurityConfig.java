@@ -53,8 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/auth/signin",
                         "/auth/signup"
                 )
-                .permitAll()
-                .anyRequest().authenticated();
+                .permitAll();
     }
 
     @Override

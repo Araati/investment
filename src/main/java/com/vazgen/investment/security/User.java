@@ -13,9 +13,7 @@ public interface User extends UserDetails {
     long getId();
     String getUsername();
     String getPassword();
-
     List<Authority> getAuthorities();
-
     LocalDateTime getCreatedAt();
     Optional<LocalDateTime> getUpdatedAt();
 
