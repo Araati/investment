@@ -1,5 +1,6 @@
 package com.vazgen.investment.service;
 
+import com.vazgen.investment.dao.ContributionRepository;
 import com.vazgen.investment.dao.ProjectRepository;
 import com.vazgen.investment.dto.ProjectCreateDTO;
 import com.vazgen.investment.dto.ProjectDTO;
@@ -7,6 +8,7 @@ import com.vazgen.investment.dto.ProjectFindDTO;
 import com.vazgen.investment.dto.ProjectUpdateDTO;
 import com.vazgen.investment.exception.ResourceNotFoundException;
 import com.vazgen.investment.model.Project;
+import com.vazgen.investment.model.entity.ContributionEntity;
 import com.vazgen.investment.model.entity.ProjectEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
+    private final ContributionRepository contributionRepository;
 
     public Project create(final ProjectCreateDTO request) {
         ProjectEntity entity = new ProjectEntity(request);
@@ -46,6 +50,14 @@ public class ProjectService {
     }
 
     public void delete(final long id) {
+        List<ContributionEntity> contributionList = contributionRepository.findAllByProjectId(id).orElseThrow(() -> new ResourceNotFoundException("Contributions"));
+
+        for(int i = 0; i < contributionList.size(); i++)    {
+            Long contributionId = contributionList.get(i).getId();
+            contributionRepository.delete(contributionRepository.findById(contributionId).orElseThrow(()
+                    -> new ResourceNotFoundException("Contribution", contributionId)));
+        }
+
         ProjectEntity entity = projectRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Project", id));
         projectRepository.delete(entity);
     }
