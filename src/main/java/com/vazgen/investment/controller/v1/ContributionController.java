@@ -20,7 +20,6 @@ public class ContributionController {
     private final ContributionFacade contributionFacade;
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public Contribution create(@Valid @RequestBody final ContributionCreateDTO request)   {
         return contributionFacade.create(request);
     }

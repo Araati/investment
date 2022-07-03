@@ -23,15 +23,11 @@ public class ContributionCreateDTO {
     @JsonProperty(value = "amount", required = true)
     private long amount;
 
-    @JsonProperty(value = "approved")
-    private boolean approved;
-
     @JsonCreator
-    public ContributionCreateDTO(final long projectId, final String account, final long amount, final boolean approved)   {
+    public ContributionCreateDTO(final long projectId, final String account, final long amount)   {
         this.projectId = projectId;
         this.account = account;
         this.amount = amount;
-        this.approved = approved;
     }
 
 }
