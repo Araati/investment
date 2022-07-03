@@ -38,6 +38,7 @@ public class ProjectService {
                 .withArticle(request.getArticle().orElse(entity.getArticle()))
                 .withPreview(request.getPreview().orElse(entity.getPreview()))
                 .withTagList(request.getTagList().orElse(entity.getTagList()))
+                .withContributionList(request.getContributionList().orElse(entity.getContributionList()))
                 .withUpdatedAt(LocalDateTime.now());
         // TODO: 06.06.2022 КОСТЫЛЬ НА updated_at
         projectRepository.save(entity);

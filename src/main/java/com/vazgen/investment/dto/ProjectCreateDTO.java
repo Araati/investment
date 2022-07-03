@@ -36,6 +36,7 @@ public class ProjectCreateDTO {
     @JsonProperty(value = "preview", required = true)
     private String preview;
 
+    // TODO: 03.07.2022 Не обязательное поле. Что тут с null?
     @JsonProperty(value = "tagList")
     private List<Long> tagList;
 

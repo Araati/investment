@@ -22,6 +22,7 @@ public class ContributionDTO implements Contribution {
     private LocalDateTime createdAt;
     private Optional<LocalDateTime> updatedAt;
 
+    // FIXME: 03.07.2022 Null в createdAt и updatedAt при создании
     public ContributionDTO(final ContributionEntity request)    {
         this.id = request.getId();
         this.projectId = request.getProjectId();

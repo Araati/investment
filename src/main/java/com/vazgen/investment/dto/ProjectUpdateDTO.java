@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +36,9 @@ public class ProjectUpdateDTO {
 
     @JsonProperty(value = "tagList")
     private List<Long> tagList;
+
+    @JsonProperty(value = "contributionList")
+    private List<Long> contributionList;
 
     public Optional<String> getType()   {
         return Optional.ofNullable(type);
@@ -68,8 +72,12 @@ public class ProjectUpdateDTO {
         return Optional.ofNullable(tagList);
     }
 
-    public ProjectUpdateDTO(final long money)   {
-        this.collectedMoney = money;
+    public Optional<List<Long>> getContributionList()   {
+        return Optional.ofNullable(contributionList);
     }
 
+    public ProjectUpdateDTO(final long money, final List<Long> contributionList)   {
+        this.collectedMoney = money;
+        this.contributionList = contributionList;
+    }
 }

@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.With;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -49,6 +52,11 @@ public class ProjectEntity {
     @ElementCollection
     @Column(name = "tags")
     private List<Long> tagList;
+
+    // FIXME: 03.07.2022 failed to lazily initialize a collection of role: com.vazgen.investment.model.entity.ProjectEntity.contributionList, could not initialize proxy - no Session
+    @ElementCollection
+    @Column(name = "contributions")
+    private List<Long> contributionList;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
