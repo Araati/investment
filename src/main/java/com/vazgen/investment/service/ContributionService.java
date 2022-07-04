@@ -1,6 +1,7 @@
 package com.vazgen.investment.service;
 
 import com.vazgen.investment.dao.ContributionRepository;
+import com.vazgen.investment.dao.ProjectRepository;
 import com.vazgen.investment.dto.*;
 import com.vazgen.investment.exception.ResourceNotFoundException;
 import com.vazgen.investment.model.Contribution;
@@ -8,14 +9,11 @@ import com.vazgen.investment.model.Project;
 import com.vazgen.investment.model.entity.ContributionEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// FIXME: 03.07.2022 @Transactional потенциально опасная аннотация. Подумай трижды
-@Transactional
 @Service
 @RequiredArgsConstructor
 public class ContributionService {
@@ -53,7 +51,7 @@ public class ContributionService {
             List<Long> contributionList = project.getContributionList();
             contributionList.remove(entity.getId());
 
-            projectService.update(new ProjectUpdateDTO(projectService.findById(entity.getProjectId()).getCollectedMoney() - entity.getAmount(),
+            projectService.update(new ProjectUpdateDTO(project.getCollectedMoney() - entity.getAmount(),
                             contributionList),
                     entity.getProjectId());
         }

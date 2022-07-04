@@ -54,6 +54,7 @@ public class ProjectService {
 
         for(int i = 0; i < contributionList.size(); i++)    {
             Long contributionId = contributionList.get(i).getId();
+            // TODO: 05.07.2022 Оптимизируй, стыд же
             contributionRepository.delete(contributionRepository.findById(contributionId).orElseThrow(()
                     -> new ResourceNotFoundException("Contribution", contributionId)));
         }

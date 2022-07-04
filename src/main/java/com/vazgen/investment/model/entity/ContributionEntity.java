@@ -46,7 +46,6 @@ public class ContributionEntity {
         this.projectId = request.getProjectId();
         this.account = request.getAccount();
         this.amount = request.getAmount();
-        this.approved = false;
     }
 
 }
