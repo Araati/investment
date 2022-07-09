@@ -7,6 +7,7 @@ import com.vazgen.investment.security.principal.Principal;
 import com.vazgen.investment.security.token.JwtAuthentication;
 import com.vazgen.investment.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationServiceException;
@@ -24,6 +25,8 @@ public class UserCredentialsAuthenticationProvider implements AuthenticationProv
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final JwtTokenIssuer tokenIssuer;
+    @Value("${jwt.token.expiration}")
+    private long expirationInHours;
 
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
@@ -38,7 +41,7 @@ public class UserCredentialsAuthenticationProvider implements AuthenticationProv
         Principal principal = new DefaultPrincipal(
                 String.valueOf(user.getId()),
                 user.getUsername(),
-                LocalDateTime.now().plusHours(1),
+                LocalDateTime.now().plusHours(expirationInHours),
                 new HashSet<>(user.getAuthorities())
         );
 
