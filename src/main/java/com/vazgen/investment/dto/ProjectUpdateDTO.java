@@ -37,9 +37,6 @@ public class ProjectUpdateDTO {
     @JsonProperty(value = "tagList")
     private List<Long> tagList;
 
-    @JsonProperty(value = "contributionList")
-    private List<Long> contributionList;
-
     public Optional<String> getType()   {
         return Optional.ofNullable(type);
     }
@@ -52,6 +49,7 @@ public class ProjectUpdateDTO {
         return Optional.ofNullable(requiredMoney);
     }
 
+    // TODO: 10.07.2022 Выпилить этот параметр
     public Optional<Long> getCollectedMoney()   {
         return Optional.ofNullable(collectedMoney);
     }
@@ -72,12 +70,7 @@ public class ProjectUpdateDTO {
         return Optional.ofNullable(tagList);
     }
 
-    public Optional<List<Long>> getContributionList()   {
-        return Optional.ofNullable(contributionList);
-    }
-
-    public ProjectUpdateDTO(final long money, final List<Long> contributionList)   {
+    public ProjectUpdateDTO(final long money)   {
         this.collectedMoney = money;
-        this.contributionList = contributionList;
     }
 }

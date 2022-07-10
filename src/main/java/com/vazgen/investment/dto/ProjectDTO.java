@@ -25,8 +25,6 @@ public class ProjectDTO implements Project {
     private String article;
     private String preview;
     private List<Long> tagList;
-
-    private List<Long> contributionList;
     private LocalDateTime createdAt;
     private Optional<LocalDateTime> updatedAt;
 
@@ -40,7 +38,6 @@ public class ProjectDTO implements Project {
         this.article = request.getArticle();
         this.preview = request.getPreview();
         this.tagList = request.getTagList();
-        this.contributionList = request.getContributionList();
         this.createdAt = request.getCreatedAt();
         this.updatedAt = Optional.ofNullable(request.getUpdatedAt());
     }

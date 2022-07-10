@@ -1,7 +1,6 @@
 package com.vazgen.investment.service;
 
 import com.vazgen.investment.dao.ContributionRepository;
-import com.vazgen.investment.dao.ProjectRepository;
 import com.vazgen.investment.dto.*;
 import com.vazgen.investment.exception.ResourceNotFoundException;
 import com.vazgen.investment.model.Contribution;
@@ -37,22 +36,16 @@ public class ContributionService {
         if(!entity.isApproved() && request.isApproved().orElse(false))  {
 
             Project project = projectService.findById(entity.getProjectId());
-            List<Long> contributionList = project.getContributionList();
-            contributionList.add(entity.getId());
 
-            projectService.update(new ProjectUpdateDTO(entity.getAmount() + project.getCollectedMoney(),
-                    contributionList),
+            projectService.update(new ProjectUpdateDTO(entity.getAmount() + project.getCollectedMoney()),
                     entity.getProjectId());
         }
         //Вытаскивание isApproved из Optional без проверки на null неопасно из-за предварительной проверки на isPresent() и &&
         if(entity.isApproved() && request.isApproved().isPresent() && !request.isApproved().get())  {
 
             Project project = projectService.findById(entity.getProjectId());
-            List<Long> contributionList = project.getContributionList();
-            contributionList.remove(entity.getId());
 
-            projectService.update(new ProjectUpdateDTO(project.getCollectedMoney() - entity.getAmount(),
-                            contributionList),
+            projectService.update(new ProjectUpdateDTO(project.getCollectedMoney() - entity.getAmount()),
                     entity.getProjectId());
         }
 
@@ -67,13 +60,7 @@ public class ContributionService {
         ContributionEntity entity = contributionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contribution", id));
 
         if(entity.isApproved())  {
-
-            Project project = projectService.findById(entity.getProjectId());
-            List<Long> contributionList = project.getContributionList();
-            contributionList.remove(entity.getId());
-
-            projectService.update(new ProjectUpdateDTO(projectService.findById(entity.getProjectId()).getCollectedMoney() - entity.getAmount(),
-                            contributionList),
+            projectService.update(new ProjectUpdateDTO(projectService.findById(entity.getProjectId()).getCollectedMoney() - entity.getAmount()),
                     entity.getProjectId());
         }
         contributionRepository.delete(entity);
@@ -89,4 +76,15 @@ public class ContributionService {
         return contributionEntities.stream().map(ContributionDTO::new).collect(Collectors.toList());
     }
 
+    public List<Contribution> findAllNotApproved() {
+        return contributionRepository.findAllByApproved(false)
+                .orElseThrow(() -> new ResourceNotFoundException("Contributions"))
+                .stream().map(ContributionDTO::new).collect(Collectors.toList());
+    }
+
+    public List<Contribution> findAllApprovedByProjectId(long projectId) {
+        return contributionRepository.findAllByProjectIdAndApproved(projectId, true)
+                .orElseThrow(() -> new ResourceNotFoundException("Contributions", projectId))
+                .stream().map(ContributionDTO::new).collect(Collectors.toList());
+    }
 }

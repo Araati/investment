@@ -37,13 +37,26 @@ public class ContributionController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public Contribution findById(@PathVariable final long id)   {
         return contributionFacade.findById(id);
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public List<Contribution> findAll() {
         return contributionFacade.findAll();
+    }
+
+    @GetMapping("/not-approved")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public List<Contribution> findAllNotApproved()  {
+        return contributionFacade.findAllNotApproved();
+    }
+
+    @GetMapping("/approved/{projectId}")
+    public List<Contribution> findAllApprovedByProjectId(@PathVariable final long projectId)    {
+        return contributionFacade.findAllApprovedByProjectId(projectId);
     }
 
 }

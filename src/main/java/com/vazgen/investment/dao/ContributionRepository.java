@@ -9,5 +9,8 @@ import java.util.Optional;
 public interface ContributionRepository extends CrudRepository<ContributionEntity, Long> {
 
     Optional<List<ContributionEntity>> findAllByProjectId(long id);
+    Optional<List<ContributionEntity>> findAllByProjectIdAndApproved(long id, boolean approved);
+
+    Optional<List<ContributionEntity>> findAllByApproved(boolean approved);
 
 }

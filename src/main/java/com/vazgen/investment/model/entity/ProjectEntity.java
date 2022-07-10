@@ -53,12 +53,6 @@ public class ProjectEntity {
     @Column(name = "tags")
     private List<Long> tagList;
 
-    // FIXME: 03.07.2022 failed to lazily initialize a collection of role: com.vazgen.investment.model.entity.ProjectEntity.contributionList, could not initialize proxy - no Session
-    // FIXME: 05.07.2022 При большой нагрузке это приведет к полному авралу. Изменить. Исправить. Не отдавать в дто список вложений, а по отдельному запросу
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Column(name = "contributions")
-    private List<Long> contributionList;
-
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

@@ -24,8 +24,6 @@ public interface Project {
 
     List<Long> getTagList();
 
-    List<Long> getContributionList();
-
     LocalDateTime getCreatedAt();
 
     Optional<LocalDateTime> getUpdatedAt();

@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +41,6 @@ public class ProjectService {
                 .withArticle(request.getArticle().orElse(entity.getArticle()))
                 .withPreview(request.getPreview().orElse(entity.getPreview()))
                 .withTagList(request.getTagList().orElse(entity.getTagList()))
-                .withContributionList(request.getContributionList().orElse(entity.getContributionList()))
                 .withUpdatedAt(LocalDateTime.now());
         // TODO: 06.06.2022 КОСТЫЛЬ НА updated_at
         projectRepository.save(entity);
@@ -52,8 +50,8 @@ public class ProjectService {
     public void delete(final long id) {
         List<ContributionEntity> contributionList = contributionRepository.findAllByProjectId(id).orElseThrow(() -> new ResourceNotFoundException("Contributions"));
 
-        for(int i = 0; i < contributionList.size(); i++)    {
-            Long contributionId = contributionList.get(i).getId();
+        for (ContributionEntity contributionEntity : contributionList) {
+            long contributionId = contributionEntity.getId();
             // TODO: 05.07.2022 Оптимизируй, стыд же
             contributionRepository.delete(contributionRepository.findById(contributionId).orElseThrow(()
                     -> new ResourceNotFoundException("Contribution", contributionId)));

@@ -35,4 +35,11 @@ public class ContributionFacade {
         return contributionService.findAll();
     }
 
+    public List<Contribution> findAllNotApproved() {
+        return contributionService.findAllNotApproved();
+    }
+
+    public List<Contribution> findAllApprovedByProjectId(long projectId) {
+        return contributionService.findAllApprovedByProjectId(projectId);
+    }
 }
