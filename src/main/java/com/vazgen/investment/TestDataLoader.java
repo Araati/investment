@@ -16,10 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -51,25 +48,63 @@ public class TestDataLoader {
 
         tagFacade.create(new TagCreateDTO("Архив", "end"));//2
         tagFacade.create(new TagCreateDTO("Завершен", "green"));//3
+        tagFacade.create(new TagCreateDTO("HOT", "orange"));//4
+
         ArrayList<Long> array = new ArrayList<>();
         array.add(2L);
         array.add(3L);
-        projectFacade.create(new ProjectCreateDTO("RR",
+        projectFacade.create(new ProjectCreateDTO(
+                "RR",
                 1,
                 1000000000000L,
                 "Oil trading",
                 "Long article about Oil trading",
                 "Short misleading preview",
-                array));//4
+                array));//5
+
         contributionFacade.create(new ContributionCreateDTO(
-                4,
+                5,
                 "https://rivalregions.com/#slide/profile/192852686",
-                1234567890L));//5
-        contributionFacade.update(new ContributionUpdateDTO(null, null, null, true), 5);
+                1234567890L));//6
+
+        contributionFacade.update(new ContributionUpdateDTO(null, null, null, true), 6);
         contributionFacade.create(new ContributionCreateDTO(
-                4,
+                5,
                 "https://rivalregions.com/#slide/profile/2001311087",
-                1L));//6
+                1L));//7
+
+        array.add(4L);
+        projectFacade.create(new ProjectCreateDTO(
+                "VK",
+                0,
+                100L,
+                "Very very very very very very long long long Title for testing purposes, y'a know",
+                "TEST TEST TEST TESTEESETSETESTSETSETSETEST",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi et leo eget augue efficitur sollicitudin. Donec iaculis sagittis varius. Phasellus odio odio, efficitur vel ornare a, ullamcorper sed ex.",
+                array));//8
+
+        contributionFacade.create(new ContributionCreateDTO(
+                8,
+                "https://rivalregions.com/#slide/profile/2001311087",
+                80L
+        ));//9
+        contributionFacade.update(new ContributionUpdateDTO(null, null, null, true), 9);
+
+        contributionFacade.create(new ContributionCreateDTO(
+                8,
+                "https://rivalregions.com/#slide/profile/2001311087",
+                43L
+        ));//10
+
+        projectFacade.create(new ProjectCreateDTO(
+                "АЕ",
+                3,
+                0L,
+                "Test",
+                "AOSRING",
+                "Pelmeni.",
+                null
+        ));//11
     }
 
     @SafeVarargs
