@@ -1,11 +1,40 @@
 version: "3"
+
 services:
-  mysql:
-    image: mysql:latest
-    ports:
-      - 3306:3306
-    volumes:
-      - ".docker/volumes/mysql:/var/lib/mysql"
-      - ".docker/dev/mysql/init:/docker-entrypoint-initdb.d"
+  app:
+    image: 'investment:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
     environment:
-      - "MYSQL_ROOT_PASSWORD=root"
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
+      - SPRING_DATASOURCE_USERNAME=compose-postgres
+      - SPRING_DATASOURCE_PASSWORD=compose-postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8080:8080"
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_DB=compose-postgres
+      - POSTGRES_USER=compose-postgres
+      - POSTGRES_PASSWORD=compose-postgres
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4:5.7
+    depends_on:
+      - db
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@test.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+    ports:
+      - "5050:80"
+    restart: unless-stopped
